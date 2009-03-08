@@ -42,6 +42,7 @@ module CouchRest
   autoload :Streamer,     'couchrest/helper/streamer'
   
   autoload :ExtendedDocument,     'couchrest/more/extended_document'
+  autoload :ViewDocument,     'couchrest/more/view_document'
   autoload :CastedModel,          'couchrest/more/casted_model'
   
   require File.join(File.dirname(__FILE__), 'couchrest', 'mixins')

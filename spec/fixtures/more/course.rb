@@ -8,7 +8,7 @@ class Course < CouchRest::ExtendedDocument
   property :questions,      :cast_as => ['Question']
   property :professor,      :cast_as => 'Person'
   property :final_test_at,  :cast_as => 'Time'
-  
+  property :students,       :cast_as => ['Student'], :default => [] #a ViewDocuemnt
   view_by :title
   view_by :dept, :ducktype => true
 end

@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.join(FIXTURE_PATH, 'more', 'article')
 require File.join(FIXTURE_PATH, 'more', 'course')
+require File.join(FIXTURE_PATH, 'more', 'student')
 
 describe "ExtendedDocument views" do
   
@@ -47,6 +48,10 @@ describe "ExtendedDocument views" do
     it "should allow you to override default args" do
       articles = Article.by_date :descending => false
       articles.collect{|a|a.title}.should == @titles
+    end
+
+    describe " a view on a sub-object" do 
+      
     end
   end
 
