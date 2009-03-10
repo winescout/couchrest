@@ -1,7 +1,8 @@
 require File.join(FIXTURE_PATH, 'more', 'question')
 require File.join(FIXTURE_PATH, 'more', 'person')
 
-class Student < CouchRest::ViewDocument
+class Student < Hash
+  include CouchRest::Mixins::ViewObject
   use_database TEST_SERVER.default_database
   
   property :name
@@ -14,7 +15,5 @@ class Student < CouchRest::ViewDocument
                    emit(student['grade_level'], student);
                  });
                }
-             }"
-          
-  
+             }"  
 end

@@ -42,11 +42,12 @@ module CouchRest
   autoload :Streamer,     'couchrest/helper/streamer'
   
   autoload :ExtendedDocument,     'couchrest/more/extended_document'
-  autoload :ViewDocument,     'couchrest/more/view_document'
+  autoload :ViewDocument,         'couchrest/more/view_document'
   autoload :CastedModel,          'couchrest/more/casted_model'
   
   require File.join(File.dirname(__FILE__), 'couchrest', 'mixins')
-  
+  require 'couchrest/more/view_document'
+
   # The CouchRest module methods handle the basic JSON serialization 
   # and deserialization, as well as query parameters. The module also includes
   # some helpers for tasks like instantiating a new Database or Server instance.

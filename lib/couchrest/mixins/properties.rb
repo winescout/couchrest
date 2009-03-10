@@ -12,7 +12,9 @@ module CouchRest
               @@properties = []
           EOS
         base.extend(ClassMethods)
-        raise CouchRest::Mixins::Properties::IncludeError, "You can only mixin Properties in a class responding to [] and []=, if you tried to mixin CastedModel, make sure your class inherits from Hash or responds to the proper methods" unless (base.new.respond_to?(:[]) && base.new.respond_to?(:[]=))
+        raise CouchRest::Mixins::Properties::IncludeError, "You can only mixin Properties 
+          in a class responding to [] and []=, if you tried to mixin CastedModel, make sure your 
+          class inherits from Hash or responds to the proper methods" unless (base.new.respond_to?(:[]) && base.new.respond_to?(:[]=))
       end
       
       def apply_defaults
