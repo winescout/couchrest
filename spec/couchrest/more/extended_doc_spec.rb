@@ -275,6 +275,7 @@ describe "ExtendedDocument" do
   
   describe "timestamping" do
     before(:each) do
+      @obj.class.use_database TEST_SERVER.default_database
       oldart = Article.get "saving-this" rescue nil
       oldart.destroy if oldart
       @art = Article.new(:title => "Saving this")
