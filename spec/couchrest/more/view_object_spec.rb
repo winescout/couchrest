@@ -10,7 +10,7 @@ require File.join(FIXTURE_PATH, 'more', 'student')
 #   property :children, :cast_as => ["Child"]
 # end
 # 
-# class Child < CouchRest::ViewDocument
+# class Child < CouchRest::Response
 #   include CouchRest::ViewObject
 #   property :year_born
 #   view_by :year_born

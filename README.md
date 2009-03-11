@@ -91,3 +91,24 @@ you can define some casting rules.
 
 If you want to cast an array of instances from a specific Class, use the trick shown above ["ClassName"]
 
+### Casting from a View
+
+Views can return any sort of JSON encoded data you want, not just full documents as they are stored in the DB.  If the objects returned from your view are defined by classes that inherit from ViewObject, then they will be instanciated correctly when the view is called using the casted_from class method.
+
+    class Parent < CouchRest::ExtendedDocument
+      property :children, :cast_as => ["Child"]
+    end
+    
+    class Child < CouchRest::Response
+      include CouchRest::ViewObject
+      property :year_born
+      view_by :year_born
+              :map => "
+                function(){
+                  if (doc['couchrest-type'] == 'Parent' && doc.tags) {
+                    doc.child.forEach(function(child){
+                      emit(null, child);
+                }}}"
+    end
+   
+    Child.casted_from :year_born => [child_1, child_2, ...]
