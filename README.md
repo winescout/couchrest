@@ -107,8 +107,8 @@ Views can return any sort of JSON encoded data you want, not just full documents
                 function(){
                   if (doc['couchrest-type'] == 'Parent' && doc.tags) {
                     doc.child.forEach(function(child){
-                      emit(null, child);
+                      emit(child.year_born, child);
                 }}}"
     end
    
-    Child.casted_from :year_born => [child_1, child_2, ...]
+    Child.casted_from :year_born   #[child_1, child_2, ...]
