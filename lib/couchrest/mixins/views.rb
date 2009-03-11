@@ -86,6 +86,15 @@ module CouchRest
           keys.push opts
           self.design_doc.view_by(*keys)
           self.design_doc_fresh = false
+
+          #no more method_missing 
+          method_name = ("by_" + keys.first.to_s).to_sym
+          class_eval <<-END
+            def self.#{method_name}(*args)
+              query = args.shift || {}
+              view('#{method_name}', query, *args)
+            end
+          END
         end
 
         # returns stored defaults if the there is a view named this in the design doc

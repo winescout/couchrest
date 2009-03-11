@@ -2,22 +2,10 @@ require 'delegate'
 
 module CouchRest  
   class Document < Response
+    include CouchRest::Mixins::DatabaseHooks
     include CouchRest::Mixins::Attachments
 
-    # def self.inherited(subklass)
-    #   subklass.send(:class_inheritable_accessor, :database)
-    # end
-    
-    class_inheritable_accessor :database
-    attr_accessor :database
-    
-    # override the CouchRest::Model-wide default_database
-    # This is not a thread safe operation, do not change the model
-    # database at runtime.
-    def self.use_database(db)
-      self.database = db
-    end
-    
+
     def id
       self['_id']
     end
@@ -84,13 +72,7 @@ module CouchRest
         couch_uri << "?rev=#{append_rev}"
       end
       couch_uri
-    end
-    
-    # Returns the document's database
-    def database
-      @database || self.class.database
-    end
-    
+    end    
   end
   
 end

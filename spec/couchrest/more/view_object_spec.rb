@@ -3,23 +3,28 @@ require File.join(FIXTURE_PATH, 'more', 'article')
 require File.join(FIXTURE_PATH, 'more', 'course')
 require File.join(FIXTURE_PATH, 'more', 'student')
 
-# ViewDocuments were born from a need to handle object types that are 
-# embedded in other objects, and want to create views of those objects.
-# 
-# class Child < CouchRest::ViewDocument
-#   property :year_born
-#   view_by :year_born
-# end
+# Mixing in ViewObject allows a class to create views,
+# and have the view cast returned objects
 #
 # class Parent < CouchRest::ExtendedDocument
 #   property :children, :cast_as => ["Child"]
 # end
+# 
+# class Child < CouchRest::ViewDocument
+#   include CouchRest::ViewObject
+#   property :year_born
+#   view_by :year_born
+#           :map => "
+#             function(){
+#               if (doc['couchrest-type'] == 'Parent' && doc.tags) {
+#                 doc.child.forEach(function(child){
+#                   emit(null, child);
+#             }}}"
+# end
+#
+# Child.casted_from :year_born => [child_1, child_2, ...]
 
 describe "ViewDocument views" do
-  describe "a model with timestamps" do 
-    it 'should set created_at with default of now'
-  end
-  
   describe "a sub-object with simple views and a default param" do
     before(:all) do
       reset_test_db!
@@ -27,7 +32,7 @@ describe "ViewDocument views" do
       @student = Student.new(:grade_level => "Freshman")
       @course.students << @student
       @course.save
-      Student.by_grade_level
+      Student.casted_from :grade_level
     end
 
     it "should have a design doc" do
@@ -39,13 +44,8 @@ describe "ViewDocument views" do
       doc['views']['by_grade_level'].should_not be_nil
     end
 
-    it "should return the matching raw view result" do
-      view = Student.by_grade_level :raw => true
-      view['rows'].length.should == 1
-    end
-
     it "should return Student objects when emitted in view" do 
-      view = Student.by_grade_level
+      view = Student.casted_from :grade_level
       view.first["couchrest-type"].should == "Student"
     end
   end

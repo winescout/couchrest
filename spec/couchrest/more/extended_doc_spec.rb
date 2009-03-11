@@ -58,7 +58,11 @@ describe "ExtendedDocument" do
   end
   
   describe "instance database connection" do
-    it "should use the default database" do
+    before do 
+      #start with db connection in known state
+      @obj.class.use_database TEST_SERVER.default_database
+    end
+    it "should database have db getter/setter" do
       @obj.database.name.should == 'couchrest-test'
     end
     

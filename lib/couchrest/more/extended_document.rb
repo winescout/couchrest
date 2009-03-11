@@ -79,7 +79,7 @@ module CouchRest
       end
     end
     
-    # Temp solution to make the view_by methods available
+    # Temp solution to make the view_by with compound keys methods available
     def self.method_missing(m, *args)
       if has_view?(m)
         query = args.shift || {}

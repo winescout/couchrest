@@ -1,8 +1,8 @@
 require File.join(FIXTURE_PATH, 'more', 'question')
 require File.join(FIXTURE_PATH, 'more', 'person')
 
-class Student < Hash
-  include CouchRest::Mixins::ViewObject
+class Student < CouchRest::Response
+  include CouchRest::ViewObject
   use_database TEST_SERVER.default_database
   
   property :name
